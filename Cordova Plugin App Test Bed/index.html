@@ -12,7 +12,7 @@
     <script src="scripts/app.js"></script>
 </head>
 <body>
-    
+    <!-- view that contains a list of all contacts -->
     <div id="all-contacts" data-role="view" data-title="My Contacts" data-show="window.getAllContacts">
         <header data-role="header">
             <div data-role="navbar">
@@ -22,16 +22,39 @@
         <ul id="contacts-list" data-role="listview"></ul>
     </div>
     
-    <div id="view-contact" data-role="view" data-title="Contact Details">
+    <!-- view that contains a the details for a chosen contact -->
+    <div id="view-contact" data-role="view" data-title="Contact Details" data-show="window.getContactDetails">
         <header data-role="header">
             <div data-role="navbar">
                 <a data-align="left" data-role="backbutton">Back</a>
                 <div data-role="view-title"></div>
             </div>
         </header>
+		<img class="largeProfile" />
         <h2 id="contact-name"></h2>
         <h4 id="contact-phone"></h4>
+		<button id="update-photo" data-role="button" onclick="window.updatePhoto()">Update Photo</button>
     </div>
-    
+	
+	<!-- the template describes a markup for a single contact model -->
+    <script id="contacts-template" type="text/x-kendo-template">
+    <li>
+		<a href="\#view-contact?rawId=#: data.id #" class="expand"> <span>#: data.id # </span>
+			# if (photos && photos.length) { #
+                <img class="smallProfile" src="${photos[0].value}" />
+            # } else { #
+                <img class="smallProfile" src="styles/blankProfile.png" />
+            # } #
+			
+			# if (name.givenName) { #
+				${name.givenName}
+			# } #
+
+			# if (name.familyName) { #
+				${name.familyName}
+			# } #
+		 </a>
+    </li>
+</script>
 </body>
 </html>
